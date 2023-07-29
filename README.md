@@ -1,7 +1,5 @@
 # Bhalu Discord Bot
 
-![Bhalu Logo]([https://example.com/bhalu-logo.png](https://cdn.discordapp.com/avatars/1134511485226340382/5259a1687b51dd86fca9ea468683af7f.png?size=1024))
-
 Bhalu is a Discord bot under development, built using DiscordPHP library. It is designed to provide various functionalities and commands for Discord servers. Please note that Bhalu is still a work in progress, and new features and improvements are continuously being added.
 
 ## Current Commands
@@ -88,4 +86,15 @@ Bhalu bot comes with a special feature to monitor your server's online player st
 - [ ] `Giverole`: Grant a role to a user.
 - [ ] `Welcome` and `Leave` messages for new users joining or leaving the server.
 
-Please note that this is not an exhaustive list, and more exciting commands and features are being planned and added regularly.
+
+## Contributing
+
+If you find a bug or want to suggest an improvement, please feel free to open an issue or submit a pull request. Your contributions are greatly appreciated!
+
+## License
+
+Bhalu Bot is open-source software licensed under the [MIT License](LICENSE).
+
+## Credits
+
+The Bhalu plugin is created and maintained by [AmitxD] (https://github.com/Amitminer).
