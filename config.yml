@@ -1,0 +1,13 @@
+# your discord bot token..
+token: 
+# your bot prefix
+prefix: .
+# enter owners ids..
+author-Id:
+    - 000000000009
+# ServerType: Bedrock or java
+server-type: bedrock
+# ServerIP it can be string or int
+server-ip: play.example.com
+# Server-port enter your server port here if not then use default (19132)
+server-port: 19132
