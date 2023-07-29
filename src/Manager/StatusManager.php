@@ -20,9 +20,9 @@ class StatusManager {
         $ip = self::getServerIP() ?? 'cubecraft.net';
         $port = self::getServerPort() ?? 19132;
         $server = "{$type}/{$ip}:{$port}";
-        var_dump($server);
+       // var_dump($server);
         $serverResponse = file_get_contents(self::URL . $server);
-        var_dump($serverResponse);
+       // var_dump($serverResponse);
         if ($serverResponse === false) {
             return [];
         }
