@@ -97,4 +97,4 @@ Bhalu Bot is open-source software licensed under the [MIT License](LICENSE).
 
 ## Credits
 
-The Bhalu plugin is created and maintained by [AmitxD](https://github.com/Amitminer).
+The Bhalu Discord Bot is created and maintained by [AmitxD](https://github.com/Amitminer).
