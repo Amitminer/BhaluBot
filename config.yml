@@ -1,8 +1,6 @@
-token: bot token 
 prefix: +
 author-Id:
     - 814660125511778315
 server-type: bedrock
-server-ip: test.ddns.net
+server-ip: samosaforashish.ddns.net
 server-port: 25899
-chatGPT-api-token:

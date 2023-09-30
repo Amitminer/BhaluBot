@@ -10,7 +10,8 @@
         "team-reflex/discord-php": "^7.3",
         "symfony/yaml": "^6.3",
         "haozi-team/chatgpt-php": "^2.1",
-        "vennv/vapm": "^1.8"
+        "vennv/vapm": "^1.8",
+        "vlucas/phpdotenv": "^5.5"
     },
     "autoload": {
         "psr-4": {

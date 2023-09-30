@@ -5,6 +5,7 @@ namespace Bhalu;
 include __DIR__.'/../vendor/autoload.php';
 
 use Discord\Discord;
+use Dotenv\Dotenv;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Event;
@@ -19,7 +20,9 @@ class BhaluBot {
     private $discord;
 
     public function __construct() {
-        $token = BhaluManager::getConfig("token");
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+        $dotenv->load();
+        $token = $_ENV['DISCORD_BOT_TOKEN'];
         $this->discord = new Discord([
             'token' => $token,
             'intents' => Intents::getDefaultIntents(),

@@ -55,6 +55,7 @@ class BhaluManager {
     }
 
     public static function getChatGPTAPI(): ?string {
-        return self::getConfig("chatGPT-api-token");
+        $token = $_ENV['CHATGPT_ACCESS_TOKEN'];
+        return $token;
     }
 }
