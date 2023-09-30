@@ -20,7 +20,7 @@ class StatusManager {
         $ip = self::getServerIP() ?? 'cubecraft.net';
         $port = self::getServerPort() ?? 19132;
         $server = "{$type}/{$ip}:{$port}";
-       // var_dump($server);
+        //var_dump($server);
         $serverResponse = file_get_contents(self::URL . $server);
        // var_dump($serverResponse);
         if ($serverResponse === false) {
@@ -37,7 +37,7 @@ class StatusManager {
     }
 
     public static function getServerType(): ?string {
-        return strtolower(BhaluManager::getConfig("server-type")) ?? null;
+        return strtolower(BhaluManager::getConfig("server-type"));
     }
 
     public static function getServerIP(): ?string {
@@ -47,6 +47,6 @@ class StatusManager {
 
     public static function getServerPort(): ?int {
         $port = BhaluManager::getConfig("server-port");
-        return is_int($port) ? $port : null;
+        return intval($port);
     }
 }

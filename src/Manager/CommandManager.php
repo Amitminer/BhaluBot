@@ -2,18 +2,29 @@
 
 namespace Bhalu\Manager;
 
-use Bhalu\libs\LibConfig;
-use Bhalu\Commands\Shutdown;
-use Bhalu\Commands\Ping;
+use Discord\Discord;
 
-class CommandManager{
+class CommandManager {
+    
+    private static $Commands = [
+        "Shutdown",
+        "Ping",
+        "Help",
+        "Ask"
+    ];
     
     public function __construct() {
-       //NOOP
+        // NOOP (No operation)
     }
-    // I really hate slash cmds.._.
-    public static function registerAll($discord){
-        $shutdown = new shutdown($discord);
-        $ping = new Ping($discord);
+    
+    public static function registerAll(Discord $discord) {
+        try {
+            foreach (self::$Commands as $commandName) {
+                $commandClass = "Bhalu\\Commands\\{$commandName}";
+                new $commandClass($discord);
+            }
+        } catch (\Exception $e) {
+            echo 'Error while registering commands: ' . $e->getMessage();
+        }
     }
 }

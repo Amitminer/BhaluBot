@@ -16,7 +16,7 @@ class Ping {
     }
     
     private function run($discord) {
-        $discord->on('message', function (Message $message) use ($discord) {
+        $discord->on('message', function (Message $message) {
             if (strpos($message->content, $this->prefix . 'ping') === 0) {
                 $message->channel->sendMessage('Pong!')->done();
             }

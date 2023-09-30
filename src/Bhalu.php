@@ -15,7 +15,7 @@ use Bhalu\Manager\StatusManager;
 use Bhalu\Manager\CommandManager;
 
 class BhaluBot {
-    
+
     private $discord;
 
     public function __construct() {
@@ -36,10 +36,11 @@ class BhaluBot {
         $this->discord->run();
     }
 
-    private function setActivity(): void{
+    private function setActivity(): void {
         $playerData = StatusManager::getServerData();
         $players = $playerData['players']['online'] ?? -1;
         $activity = new Activity($this->discord, [
+            'status' => 'dnd',
             'name' => "Playing With {$players} players.",
             'type' => Activity::TYPE_PLAYING,
         ]);
