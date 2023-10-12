@@ -53,7 +53,6 @@ class ConfigManager
     public static function getAuthors(): array
     {
         $authors = self::getConfigValue("author-Id");
-        // @phpstan-ignore-next-line
         return is_array($authors) ? $authors : [];
     }
 

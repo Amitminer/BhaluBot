@@ -26,6 +26,15 @@ class Spam {
         });
     }
 
+    /**
+    * Handles the spam request by sending multiple messages to the channel.
+    *
+    * @param Message $message The Discord message object.
+    * @param array<int, string> $args An array containing the command arguments.
+    * @param string|null $prefix The command prefix.
+    *
+    * @return void
+    */
     private function handleSpamRequest(Message $message,
         array $args,
         ?string $prefix): void {
@@ -46,9 +55,6 @@ class Spam {
         Promise::all($promises)->then(
             function () {
                 //echo 'All messages sent successfully!';
-            },
-            function ($error) {
-                echo 'Error: ' . $error;
             }
         );
     }
