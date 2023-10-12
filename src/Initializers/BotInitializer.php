@@ -42,7 +42,7 @@ class BotInitializer {
 
         $this->discord->on('ready', function (DiscordClient $discord) {
             CommandManager::registerAll($discord);
-            BhaluManager::setActivity($discord, 2, "Under-Maintenance!", 'dnd');
+            BhaluManager::setActivity($discord);
             self::sendLoginMessage($discord);
         });
        # $this->discord->run();

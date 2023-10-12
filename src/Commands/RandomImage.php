@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Bhalu\Commands;
 
 use Discord\Discord;
 use Discord\Builders\MessageBuilder;
 use Discord\Parts\Channel\Message;
-use Bhalu\Manager\ConfigManager;
 use Bhalu\Manager\ImageManager;
 
 class RandomImage {
@@ -16,31 +17,49 @@ class RandomImage {
 
     private function execute(Discord $discord, ?string $prefix): void {
         $discord->on('message', function (Message $message) use ($prefix) {
-            if (strpos($message->content, $prefix . 'random') === 0) {
-                $query = trim(str_replace($prefix . 'random', '', $message->content));
+            if ($this->isRandomImageCommand($message, $prefix)) {
+                $query = $this->extractQuery($message->content, $prefix);
 
                 if (!empty($query)) {
-                    $this->generateRandomImage($query, $message);
+                    $this->sendRandomImage($message, $query);
                 } else {
-                    $message->reply("Error: You need to provide a query for the random image.")->done();
+                    $this->replyWithError($message, "You need to provide a query for the random image.");
                 }
             }
         });
     }
 
-    private function generateRandomImage(?string $query,
-        Message $message): void {
-        ImageManager::getRandomImage($query)
-        ->then(function ($imagePath) use ($message) {
-            var_dump($imagePath);
+    private function isRandomImageCommand(Message $message,
+        ?string $prefix): bool {
+        return strpos($message->content,
+            $prefix . 'random') === 0;
+    }
 
-            $message->channel->broadcastTyping();
-            $message->reply(MessageBuilder::new()->addFile($imagePath));
-        })
-        ->catch(function ($error) use ($message) {
+    private function extractQuery(string $messageContent,
+        ?string $prefix): string {
+        return trim(str_replace($prefix . 'random', '', $messageContent));
+    }
 
-            $message->channel->broadcastTyping();
-            $message->reply("Error: $error")->done();
-        });
+    private function sendRandomImage(Message $message,
+        string $query): void {
+        $imagePath = ImageManager::getRandomImage($query);
+        if ($imagePath !== null) {
+            $this->replyWithImage($message, $imagePath);
+        } else {
+            ///$this->logError($error);
+            $this->replyWithError($message, "Failed to fetch random image.");
+        }
+    }
+
+    private function replyWithImage(Message $message,
+        string $imagePath): void {
+        $message->channel->broadcastTyping();
+        $message->reply(MessageBuilder::new()->addFile($imagePath));
+    }
+
+    private function replyWithError(Message $message,
+        string $error): void {
+        $message->channel->broadcastTyping();
+        $message->reply("Error: $error")->done();
     }
 }

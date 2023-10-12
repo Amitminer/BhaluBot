@@ -10,14 +10,17 @@
         "team-reflex/discord-php": "^7.3",
         "symfony/yaml": "^6.3",
         "haozi-team/chatgpt-php": "^2.1",
-        "vennv/vapm": "^1.8"
+        "vennv/vapm": "^1.8",
+        "vlucas/phpdotenv": "^5.5",
+        "krisciunaskarolis/openai-images-generator": "^1.0",
+        "amitxd/libconfig": "^1.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
             "Bhalu\\": "src/"
         }
-    },
-    "require-dev": {
-        "phpstan/phpstan": "^1.10"
     }
 }

@@ -9,8 +9,7 @@ include dirname(__DIR__) . '/../vendor/autoload.php';
 use Krisciunas\OpenAi\Persist\ImagesPersist;
 use Krisciunas\OpenAi\Api\ImagePrompt;
 use Krisciunas\OpenAi\Api\GenerateImageCommand;
-use vennv\vapm\System;
-use vennv\vapm\simultaneous\Promise;
+use Exception;
 
 class ImageManager {
 
@@ -38,61 +37,52 @@ class ImageManager {
         return $imagesPersistor->persist($imagesData, 'Image_%s.png');
     }
 
-    /**
-    * @param string|null $query
-    * @return Promise|null
-    */
-    public static function getRandomImage(?string $query): ?Promise {
-        return new Promise(function (callable $resolve, callable $reject) use ($query) {
+    public static function getRandomImage(?string $query): ?string {
+        try {
             $accessKey = ConfigManager::getUnSplashKey();
             $encodedQuery = urlencode($query);
             $url = "https://api.unsplash.com/photos/random?client_id=$accessKey&query=$encodedQuery";
 
-            System::fetch($url)
-            ->then(function($response) use ($resolve, $reject) {
-                $jsonData = json_decode($response, true);
-                // Debug: Print JSON data for inspection
-                var_dump($jsonData);
+            $response = file_get_contents($url);
 
-                if (!isset($jsonData['urls']['regular'])) {
-                    $reject("Invalid JSON response");
-                } else {
-                    $imagePath = self::saveRandomImg($jsonData);
-                    // Debug: Print image path for inspection
-                    var_dump($imagePath);
+            if ($response === false) {
+                throw new Exception("Failed to fetch image");
+            }
 
-                    if (!$imagePath) {
-                        $reject("Failed to save image");
-                    } else {
-                        $resolve($imagePath);
-                    }
-                }
-            })
-            ->catch(function($reason) use ($reject) {
-                // Debug: Print reason for rejection
-                var_dump($reason);
+            $jsonData = json_decode($response, true);
 
-                $reject($reason);
-            });
-        });
+            if ($jsonData === null && json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception("Invalid JSON response: " . json_last_error_msg());
+            }
+
+            if (!isset($jsonData['urls']['regular'])) {
+                throw new Exception("Invalid JSON structure: 'urls' or 'regular' key not found");
+            }
+            $imagePath = ImageManager::saveRandomImage($jsonData);
+            return $imagePath;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     /**
     * @param array<string, mixed> $jsonData
     * @return string|null
     */
-    private static function saveRandomImg(array $jsonData): string|null {
+    private static function saveRandomImage(array $jsonData): ?string {
         $imageUrl = $jsonData['urls']['regular'];
-
         $srcDir = dirname(__DIR__) . '/../';
         $tmpDir = $srcDir . 'tmp' . DIRECTORY_SEPARATOR;
 
         $imageName = 'randomImage.png';
         $imagePath = $tmpDir . $imageName;
 
-        if (copy($imageUrl, $imagePath)) {
+        try {
+            $fileContent = file_get_contents($imageUrl);
+            file_put_contents($imagePath,
+                $fileContent);
             return $imagePath;
-        } else {
+        } catch (Exception $e) {
             return null;
         }
     }

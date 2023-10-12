@@ -24,7 +24,7 @@ class ChatManager {
     public static function getChatGPT(?string $question): ?string {
         try {
             $chatGPT = new ChatGPTV1();
-            $chatGPT->addAccount(BhaluManager::getChatGPTAPI());
+            $chatGPT->addAccount(ConfigManager::getChatGPTAPI());
             $answers = $chatGPT->ask($question);
             $resolvedAnswers = '';
 

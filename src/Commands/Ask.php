@@ -17,17 +17,16 @@ class Ask {
     * Ask constructor.
     * @param Discord $discord
     */
-    public function __construct($discord) {
-        $this->run($discord);
+    public function __construct(Discord $discord, ?string $prefix) {
+        $this->execute($discord, $prefix);
     }
 
     /**
     * Set up event listener for 'message' event
     * @param Discord $discord
     */
-    private function run($discord) {
-        $discord->on('message', function (Message $message) {
-            $prefix = BhaluManager::getPrefix();
+    private function execute(Discord $discord, string $prefix): void {
+        $discord->on('message', function (Message $message) use ($prefix) {
             if (self::startsWith($message->content, $prefix . 'ask')) {
                 $question = trim(substr($message->content, strlen($prefix . 'ask')));
                 if (!empty($question)) {
@@ -39,8 +38,7 @@ class Ask {
         });
     }
 
-    private static function startsWith($haystack,
-        $needle) {
+    private static function startsWith(string $haystack, string $needle): bool {
         return strncmp($haystack,
             $needle,
             strlen($needle)) === 0;

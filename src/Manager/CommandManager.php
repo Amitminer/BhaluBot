@@ -5,23 +5,31 @@ namespace Bhalu\Manager;
 use Discord\Discord;
 
 class CommandManager {
-    
-    private static $Commands = [
+
+    /**
+    * Array of available commands.
+    *
+    * @var string[] List of available command names.
+    */
+    private static array $Commands = [
         "Shutdown",
-        "Ping",
+        "Say",
         "Help",
-        "Ask"
+        "Ask",
+        "RandomImage",
+        "Imagine"
     ];
-    
+
     public function __construct() {
         // NOOP (No operation)
     }
-    
-    public static function registerAll(Discord $discord) {
+
+    public static function registerAll(Discord $discord): void {
         try {
             foreach (self::$Commands as $commandName) {
                 $commandClass = "Bhalu\\Commands\\{$commandName}";
-                new $commandClass($discord);
+                $prefix = ConfigManager::getPrefix();
+                new $commandClass($discord, $prefix);
             }
         } catch (\Exception $e) {
             echo 'Error while registering commands: ' . $e->getMessage();
