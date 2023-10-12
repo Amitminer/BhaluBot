@@ -31,9 +31,9 @@ class ConfigManager
 
     /**
     * @param string $value
-    * @return string|int|null
+    * @return string|int|array<string, string>|null
     */
-    public static function getConfigValue(string $value): string|int|null
+    public static function getConfigValue(string $value): string|int|array|null
     {
         $config = self::getYamlConfig();
         return $config ? $config->get($value) : null;

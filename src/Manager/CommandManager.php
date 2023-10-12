@@ -17,7 +17,8 @@ class CommandManager {
         "Help",
         "Ask",
         "RandomImage",
-        "Imagine"
+        "Imagine",
+        "Spam"
     ];
 
     public function __construct() {
