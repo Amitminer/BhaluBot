@@ -45,27 +45,32 @@ class Ask {
     }
 
     /**
-    * Method to get an answer asynchronously
-    * @param string|null $question
-    * @param Message $message
-    * @return Promise
-    */
-    public static function getAnswer(?string $question,
-        $message): Promise
-    {
-        return new Promise(function (callable $resolve, callable $reject) use ($question, $message) {
-            // Perform asynchronous operation inside Async block
-            new Async(function () use ($question, $resolve, $reject, $message) {
-                // Await the ChatGPT response asynchronously
-                $result = Async::await(ChatManager::getChatGPT($question));
-                if ($result) {
-                    $resolve($result);
-                    $message->reply($result)->done();
-                } else {
-                    // If failed, reject the promise
-                    $reject('Failed to get answer from ChatGPT');
-                }
-            });
+ * Method to get an answer asynchronously
+ * @param string|null $question
+ * @param Message $message
+ * @return Promise
+ */
+public static function getAnswer(?string $question, $message): Promise
+{
+    return new Promise(function (callable $resolve, callable $reject) use ($question, $message) {
+        // Perform asynchronous operation inside Async block
+        new Async(function () use ($question, $resolve, $reject, $message) {
+            // Await the ChatGPT response asynchronously
+            $result = Async::await(ChatManager::getChatGPT($question));
+
+            // Truncate the response if it exceeds 2000 characters
+            if (strlen($result) > 1800) {
+                $result = substr($result, 0, 1800);
+            }
+
+            if ($result) {
+                $resolve($result);
+                $message->reply($result)->done();
+            } else {
+                // If failed, reject the promise
+                $reject('Failed to get answer from ChatGPT');
+            }
         });
-    }
+    });
+  }
 }
