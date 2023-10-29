@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Bhalu\Commands;
 
 include dirname(__DIR__) . '/../vendor/autoload.php';
 
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
-use Bhalu\Manager\BhaluManager;
 use Bhalu\Manager\ChatManager;
 use vennv\vapm\simultaneous\Promise;
 use vennv\vapm\simultaneous\Async;
@@ -15,15 +16,19 @@ class Ask {
 
     /**
     * Ask constructor.
-    * @param Discord $discord
+    *
+    * @param Discord $discord The Discord instance.
+    * @param string|null $prefix The command prefix.
     */
     public function __construct(Discord $discord, ?string $prefix) {
         $this->execute($discord, $prefix);
     }
 
     /**
-    * Set up event listener for 'message' event
-    * @param Discord $discord
+    * Set up event listener for 'message' event.
+    *
+    * @param Discord $discord The Discord instance.
+    * @param string $prefix The command prefix.
     */
     private function execute(Discord $discord, string $prefix): void {
         $discord->on('message', function (Message $message) use ($prefix) {
@@ -38,39 +43,60 @@ class Ask {
         });
     }
 
-    private static function startsWith(string $haystack, string $needle): bool {
+    /**
+    * Check if a string starts with a specific substring.
+    *
+    * @param string $haystack The string to search in.
+    * @param string $needle The substring to search for.
+    * @return bool True if $haystack starts with $needle, false otherwise.
+    */
+    private static function startsWith(string $haystack,
+        string $needle): bool {
         return strncmp($haystack,
             $needle,
             strlen($needle)) === 0;
     }
 
     /**
- * Method to get an answer asynchronously
- * @param string|null $question
- * @param Message $message
- * @return Promise
- */
-public static function getAnswer(?string $question, $message): Promise
-{
-    return new Promise(function (callable $resolve, callable $reject) use ($question, $message) {
-        // Perform asynchronous operation inside Async block
-        new Async(function () use ($question, $resolve, $reject, $message) {
-            // Await the ChatGPT response asynchronously
-            $result = Async::await(ChatManager::getChatGPT($question));
+    * Handle the response from ChatGPT.
+    *
+    * @param string $chatGPTResponse The response from ChatGPT.
+    * @param Message $message The Discord message object.
+    * @param callable $resolve The resolve function for the Promise.
+    * @param callable $reject The reject function for the Promise.
+    */
+    private static function handleGPTResponse(string $chatGPTResponse,
+        Message $message,
+        callable $resolve,
+        callable $reject): void {
+        if ($chatGPTResponse) {
+            // Split the response into chunks of 2000 characters
+            $chunks = str_split($chatGPTResponse, 2000);
 
-            // Truncate the response if it exceeds 2000 characters
-            if (strlen($result) > 1800) {
-                $result = substr($result, 0, 1800);
+            // Send each chunk as a separate message
+            foreach ($chunks as $chunk) {
+                $message->reply($chunk)->done();
             }
 
-            if ($result) {
-                $resolve($result);
-                $message->reply($result)->done();
-            } else {
-                // If failed, reject the promise
-                $reject('Failed to get answer from ChatGPT');
-            }
+            $resolve('Response sent successfully.');
+        } else {
+            $reject('Failed to get answer from ChatGPT');
+        }
+    }
+
+    /**
+    * Get an answer asynchronously from ChatGPT.
+    *
+    * @param string|null $question The question to ask ChatGPT.
+    * @param Message $message The Discord message object.
+    * @return Promise The Promise resolving with the response from ChatGPT.
+    */
+    public static function getAnswer(?string $question, Message $message): Promise {
+        return new Promise(function (callable $resolve, callable $reject) use ($question, $message) {
+            new Async(function () use ($question, $resolve, $reject, $message) {
+                $chatGPTResponse = Async::await(ChatManager::getChatGPT($question));
+                Ask::handleGPTResponse($chatGPTResponse, $message, $resolve, $reject);
+            });
         });
-    });
-  }
+    }
 }
