@@ -41,7 +41,7 @@ Installation of Bhalu bot is straightforward:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Amitminer/Bhalu/
+git clone https://github.com/Amitminer/BhaluBot/
 cd Bhalu
 ```
 
@@ -75,7 +75,7 @@ Bhalu bot comes with a special feature to monitor your server's online player st
 
 ## TODO List
 
-- [ ] `Status`: Monitor your server's online players.
+- [X] `Status`: Monitor your server's online players.
 - [ ] `Purge`: Bulk delete messages from a channel.
 - [ ] `Deletechannel`: Delete a channel from your Discord server.
 - [ ] `Createchannel`: Create a new channel.
