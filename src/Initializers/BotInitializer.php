@@ -8,6 +8,7 @@ require dirname(__DIR__) . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use Bhalu\Utils\Colors;
+use Bhalu\VersionInfo;
 use Discord\Discord as DiscordClient;
 use Discord\WebSockets\Intents;
 use Discord\Parts\User\Activity;
@@ -20,6 +21,7 @@ use Bhalu\Manager\ConfigManager;
 */
 class BotInitializer {
     use Colors;
+    use VersionInfo;
 
     /**
     * Discord client instance.
@@ -68,6 +70,7 @@ class BotInitializer {
         $reset = self::RESET;
 
         echo $green . "Bot is Now Online!\n";
+        echo $green . "Version:" . VersionInfo::getVersion();
         echo $green . "Logged in as " . $yellow . $discord->user->username . $reset . "\n";
         echo $blue . "Made by AmitxD" . $reset . "\n";
     }

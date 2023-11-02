@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bhalu\Commands;
 
 use Discord\Discord;
@@ -15,14 +17,13 @@ class Help {
     private function execute(Discord $discord, ?string $prefix): void {
         $discord->on('message', function (Message $message) use ($prefix) {
             if (strpos($message->content, $prefix . 'help') === 0) {
-                // im soo lazzy to update help command..
                 $helpMessage = "List of available commands:\n";
-                $helpMessage .= "{$prefix}say give command to say something...\n";
-                $helpMessage .= "{$prefix}purge user total - Purge messages sent by a specific user.\n";
-                $helpMessage .= "{$prefix}purge 10 - Purge the last 10 messages in the channel.\n";
-                $helpMessage .= "{$prefix}purge all - Purge all messages in the channel.\n";
-                $helpMessage .= "{$prefix}purge bot all - Purge all messages sent by the bot in the channel.\n";
-                $helpMessage .= "{$prefix}shutdown - Shutdown the bot (only accessible to bot owners).\n";
+                $helpMessage .= "**{$prefix}random (your query)** - Generates a random image based on your query.\n";
+                $helpMessage .= "**{$prefix}imagine (count) (query.. what to imagine)** - Imagines the specified query and sends an image.\n";
+                $helpMessage .= "**{$prefix}ask (what you want to ask)** - Responds to your query.\n";
+                $helpMessage .= "**{$prefix}spam (count) (message to spam)** - Sends the specified message multiple times.\n";
+                $helpMessage .= "**{$prefix}say (message)** - Sends the specified message.\n";
+                $helpMessage .= "**{$prefix}shutdown** - Shuts down the bot for maintenance (bot owners only).\n";
 
                 $message->channel->sendMessage($helpMessage);
             }

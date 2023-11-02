@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bhalu\Manager;
 
 use Bhalu\Manager\ConfigManager;

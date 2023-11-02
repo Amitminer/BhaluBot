@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bhalu\Manager;
 
 include dirname(__DIR__) . '/../vendor/autoload.php';

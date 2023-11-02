@@ -1,100 +1,147 @@
-# Bhalu Discord Bot
+---
 
-Bhalu is a Discord bot under development, built using DiscordPHP library. It is designed to provide various functionalities and commands for Discord servers. Please note that Bhalu is still a work in progress, and new features and improvements are continuously being added.
+# BhaluBot Discord Bot
 
-## Current Commands
+BhaluBot is a versatile Discord bot designed to elevate your server experience with interactive and entertaining features. From generating random images to providing insightful responses, BhaluBot is here to make your Discord server lively and engaging.
 
-1. `Ping`: Check the bot's response time.
-2. `Shutdown`: Shutdown the bot (restricted to authorized users).
+## Installation:
 
-## Configuration
+1. **Clone the repository:**
+   ```
+   git clone https://github.com/Amitminer/BhaluBot.git
+   cd BhaluBot
+   ```
 
-To run Bhalu bot, you need to set up the `config.yml` file with the following information:
+2. **Install Dependencies:**
+   ```
+   composer install
+   ```
 
-```yaml
-# Your Discord bot token
-token: YOUR_DISCORD_BOT_TOKEN
+3. **Set executable permissions for `start.sh`**:
 
-# Your bot prefix
-prefix: .
+   ```bash
+   chmod +x start.sh
+   ```
 
-# Enter owners' Discord IDs
-author-Id:
-    - 000000000009
+4. **Setup:**
 
-# Server Type: Bedrock or Java
-server-type: bedrock
+   - **Configuration:**
+     BhaluBot uses a `config.yml` file for configuration. Ensure the following settings are correctly configured in the `config.yml`
 
-# Server IP (can be a string or int)
-server-ip: play.example.com
+   - **Environment Variables:**
+     Create a `.env` file in the root directory to store your sensitive information. Here are the environment variables you can set in the `.env` file [Click me to see .env setup](https://github.com/Amitminer/BhaluBot#Environment+Variables+(`.env`):)
 
-# Server port (enter your server port here, if not then use default 19132)
-server-port: 19132
+5. **Start the bot using:**
 
-# Add any other configurations here...
+   ```bash
+   ./start.sh
+   ```
+   or
+   ```bash
+   bash start.sh
+   ```
+
+## Commands:
+
+- **`+random (your query)`**
+
+  Generates a random image based on your query, for example:
+  ```
+  +random supercar
+  ```
+  BhaluBot will send you a random supercar image. Powered by Unsplash API.
+
+- **`+imagine (count) (query.. what to imagine)`**
+
+  Bot will imagine the specified query and send an image, for example:
+  ```
+  +imagine 1 a bear eating burger
+  ```
+  BhaluBot will generate an image of a bear eating a burger. Powered by OpenAI.
+
+- **`+ask (what you want to ask)`**
+
+  BhaluBot responds to your query, for example:
+  ```
+  +ask How are you?
+  ```
+  Bot: "I'm fine, etc." Powered by ChatGPT.
+
+- **`+spam (count) (message to spam)`**
+
+  Sends the specified message multiple times, for example:
+  ```
+  +spam 5 hello
+  ```
+  BhaluBot will send "hello" 5 times.
+
+- **`+say (message)`**
+
+  Bot will send the specified message, for example:
+  ```
+  +say Hello, everyone!
+  ```
+  BhaluBot will send "Hello, everyone!"
+
+- **`+shutdown`**
+
+  Shuts down the bot for maintenance. This command is owner-only.
+
+## Configuration:
+
+- **`config.yml`**
+
+  ```yaml
+  # Your bot prefix
+  prefix: +
+
+  # Enter owners' Discord IDs
+  author-Id:
+      - 000000000009
+
+  # Server Type: Bedrock or Java
+  server-type: bedrock
+
+  # Server IP (can be a string or int)
+  server-ip: play.example.com
+
+  # Server port (enter your server port here, if not then use default 19132 for bedrock only)
+  server-port: 19132
+  ```
+  
+## Environment Variables (`.env`):
+
+Create a `.env` file in the root directory to store your sensitive information. Here are the environment variables you can set in the `.env` file:
+
+- `DISCORD_BOT_TOKEN`: Your Discord bot token.
+- `OPENAI_API_KEY`: Your OpenAI API key. Get it from [OpenAI](https://platform.openai.com/).
+- `UNSPLASH_ACCESS_KEY`: Your Unsplash API key. Obtain it from [Unsplash](https://unsplash.com/developers).
+- `CHATGPT_ACCESS_TOKEN`: Your ChatGPT API access token.
+
+Example `.env` file:
+
+```plaintext
+DISCORD_BOT_TOKEN=your_discord_bot_token
+OPENAI_API_KEY=your_openai_api_key
+UNSPLASH_ACCESS_KEY=your_unsplash_access_key
+CHATGPT_ACCESS_TOKEN=your_chatgpt_access_token
 ```
 
-## How to Install?
+Make sure to replace `your_discord_bot_token`, `your_openai_api_key`, `your_unsplash_access_key`, and `your_chatgpt_access_token` with your actual tokens and keys.
 
-Installation of Bhalu bot is straightforward:
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/Amitminer/BhaluBot/
-cd Bhalu
-```
-
-2. Update the required dependencies:
-
-```bash
-composer update
-```
-
-3. Set executable permissions for `start.sh`:
-
-```bash
-chmod +x start.sh
-```
-
-4. Add your Discord bot token to the `config.yml` file.
-
-5. Start the bot using:
-
-```bash
-./start.sh
-```
-or
-```bash
-bash start.sh
-```
-
-## Special Feature
-
-Bhalu bot comes with a special feature to monitor your server's online player status in Bhalu Bot Profile status. *Use the `Status` command to see how many players are currently online on your server.
-
-## TODO List
-
-- [X] `Status`: Monitor your server's online players.
-- [ ] `Purge`: Bulk delete messages from a channel.
-- [ ] `Deletechannel`: Delete a channel from your Discord server.
-- [ ] `Createchannel`: Create a new channel.
-- [ ] `Mute`: Mute a user in the server.
-- [ ] `Ban`: Ban a user from the server.
-- [ ] `Kick`: Kick a user from the server.
-- [ ] `Nickname`: Change a user's nickname.
-- [ ] `Giverole`: Grant a role to a user.
-- [ ] `Welcome` and `Leave` messages for new users joining or leaving the server.
+These environment variables are crucial for the proper functioning of BhaluBot. Ensure that you keep this file secure and do not share these sensitive details publicly.
 
 
-## Contributing
+## Contributing:
 
 If you find a bug or want to suggest an improvement, please feel free to open an issue or submit a pull request. Your contributions are greatly appreciated!
 
-## License
+## License:
 
 Bhalu Bot is open-source software licensed under the [MIT License](LICENSE).
 
-## Credits
+## Credits:
 
 The Bhalu Discord Bot is created and maintained by [AmitxD](https://github.com/Amitminer).
+
+---

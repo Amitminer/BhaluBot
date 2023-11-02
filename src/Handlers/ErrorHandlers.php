@@ -9,4 +9,5 @@ use Throwable;
 
 abstract class ErrorHandlers extends Exception {
     abstract public function setErrorMessage(): string;
+    // TODO
 }
