@@ -29,7 +29,7 @@ BhaluBot is a versatile Discord bot designed to elevate your server experience w
      BhaluBot uses a `config.yml` file for configuration. Ensure the following settings are correctly configured in the `config.yml`
 
    - **Environment Variables:**
-     Create a `.env` file in the root directory to store your sensitive information. Here are the environment variables you can set in the `.env` file [Click me to see .env setup](https://github.com/Amitminer/BhaluBot#Environment+Variables+(`.env`):)
+     Create a `.env` file in the root directory to store your sensitive information. Here are the environment variables you can set in the `.env` file [Click me to see .env setup](https://github.com/Amitminer/BhaluBot#environment-variables-env)
 
 5. **Start the bot using:**
 
